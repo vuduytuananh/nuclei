@@ -19,14 +19,18 @@ def process_mask(mask_path):
     print("Processing mask...")
 
 for sub_dir in os.listdir(train_images_dir):
-    pic_data = numpy.array([])
+    pic_data = np.array([])
     for sd in os.listdir(train_images_dir + sub_dir):
         dir_path = train_images_dir + sub_dir + "/" + sd + "/"
         file_path = dir_path + os.listdir(dir_path)[0]
         # image
         if sd == image_dir_name:
-            pic_data = mpimg.readimg(file_path)
+            pic_data = mpimg.imread(file_path)[:,:,1]
+            print(pic_data.shape)
+            # print(pic_data[0])
         # mask
         else:
-            pic_data += mpimg.readimg(file_path)
+            mask_data = mpimg.imread(file_path)
+            pic_data += mask_data
+            # print(mask_data.shape)
             show_time(pic_data)
